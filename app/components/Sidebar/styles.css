@@ -1,0 +1,78 @@
+.container {
+  color: rgba(255,255,255,.65);
+  background-color: #1f1f1f;
+  height: 100vh;
+  -webkit-user-select: none;
+  -webkit-app-region: drag;
+  transition: all 0s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+}
+
+.canSelect {
+  -webkit-app-region: no-drag;
+}
+
+.appear {
+  opacity: 1 !important;
+  animation: fadein 0.3s;
+}
+
+.noAnimation {
+  transition: all 0s cubic-bezier(0.645, 0.045, 0.355, 1) !important;
+}
+
+.common {
+  background-color: #1f1f1f !important;
+}
+
+.title {
+  color: #ffffff;
+  text-align: center;
+  user-select: none;
+  font-family: 'UnderwoodChampion', serif;
+  opacity: 0;
+  font-size: 24px;
+}
+
+.list {
+  -webkit-app-region: no-drag;
+  list-style: none;
+  margin-left: 0;
+  padding-left: 20px;
+  opacity: 0;
+  margin-top: 30px;
+}
+
+.listLink {
+  color: rgba(255,255,255,.65);
+  font-size: 16px !important;
+  margin-top: 10px;
+}
+
+.listLink:focus, .listLink:active {
+  color: rgba(255,255,255,.65);
+}
+
+.listLink:hover {
+  color: #ffffff;
+}
+
+.footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+  color: rgba(255,255,255,.35) !important;
+}
+
+.launcherDownloadLink {
+  color: rgba(255,255,255,.5) !important;
+  font-size: 12px !important;
+}
+
+.invisible {
+  display: none !important;
+}
+
+.launcherDownloadLink:hover {
+  color: rgba(255,255,255,1) !important;
+}

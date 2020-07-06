@@ -1,0 +1,28 @@
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+.homePage {
+  animation: fadein 0.420s;
+}
+
+.container {
+  position: absolute;
+  top: 30%;
+  left: 10px;
+  text-align: center;
+}
+
+.container h2 {
+  font-size: 5rem;
+}
+
+.container a {
+  font-size: 1.4rem;
+}
+
+.content {
+  background-color: #161616;
+  padding: 10px 30px;
+}

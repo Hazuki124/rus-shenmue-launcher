@@ -1,0 +1,73 @@
+.game {
+  /*width: 264px;*/
+  -webkit-app-region: no-drag;
+  animation: fadein 4.9s;
+}
+
+.footer {
+  background-color: #161616 !important;
+  color: rgba(255,255,255,.65);
+  padding: 14px 0 !important;
+}
+
+.common {
+  background-color: #161616 !important;
+}
+
+.btnDir {
+  color: rgba(255,255,255,.65);
+  margin: 0 !important;
+  padding: 0 !important;
+}
+
+.btnDir:focus, .btnDir:active {
+  color: rgba(255,255,255,.65);
+}
+
+.btnDir:hover {
+  color: #ffffff;
+}
+
+.btnDirNoAction {
+  color: rgba(255,255,255,.65) !important;
+  cursor: default !important;
+}
+
+.gameDirIsPresentOuter {
+
+}
+
+.gameDirIsPresent {
+  cursor: pointer;
+}
+
+.gameDirIsPresent:hover {
+  transform: scale(1.1);
+}
+
+.gameDirIsNotPresent {
+  -webkit-filter: grayscale(100%);
+  filter: grayscale(100%);
+}
+
+.updateAvailable {
+  -webkit-filter: grayscale(50%);
+  filter: grayscale(50%);
+}
+
+.title {
+  color: #ffffff;
+  font-weight: bold;
+  user-select: none;
+}
+
+.dropdown {
+  border-radius: 0 !important;
+  padding: 0 12px !important;
+  height: 22px !important;
+}
+
+.dropdownItem Ul {
+  border-radius: 0;
+}
+

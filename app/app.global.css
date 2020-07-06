@@ -1,0 +1,132 @@
+/*
+ * @NOTE: Prepend a `~` to css file paths that are in your node_modules
+ *        See https://github.com/webpack-contrib/sass-loader#imports
+ */
+@import '~@fortawesome/fontawesome-free/css/all.css';
+@import '~antd/dist/antd.css';
+
+@font-face {
+  font-family: 'UnderwoodChampion';
+  src: url('./assets/font/uwch.ttf');
+}
+
+@keyframes fadein {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+
+@-webkit-keyframes fadein {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+body {
+  margin: 0;
+  /* position: relative; */
+  color: white;
+  height: 100vh;
+  background-color: #111111;
+  /* background-image: linear-gradient(
+    45deg,
+    rgba(0, 216, 255, 0.5) 10%,
+    rgba(0, 1, 127, 0.7)
+  ); */
+  font-family: Arial, Helvetica, Helvetica Neue, serif;
+  overflow-y: hidden;
+  animation: fadein 0.8s;
+}
+
+h2 {
+  margin: 0;
+  font-size: 2.25rem;
+  font-weight: bold;
+  letter-spacing: -0.025em;
+  color: #fff;
+}
+
+p {
+  font-size: 24px;
+}
+
+li {
+  list-style: none;
+}
+
+a {
+  color: white;
+  opacity: 0.75;
+  text-decoration: none;
+}
+
+a:hover {
+  opacity: 1;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.ant-btn {
+  background-color: transparent;
+  border-bottom-color: transparent;
+}
+
+.ant-btn-primary {
+  color: #fff;
+  background: #1890ff;
+  border-color: #1890ff;
+}
+
+/* Ant global styles*/
+.ant-btn-link, .ant-btn-link:focus, .ant-btn-link:active {
+  color: rgba(255,255,255,.65);
+}
+
+.ant-btn-link:hover {
+  color: rgba(255,255,255,1);
+}
+
+.ant-layout-sider {
+  background: #1f1f1f;
+}
+
+.ant-layout-header {
+  background: none;
+}
+
+.ant-dropdown-menu-item {
+  font-size: 15px;
+}
+
+.ant-badge-dot {
+  top: 2px;
+  right: -4px;
+  box-shadow: none;
+}
+
+.ant-progress-inner {
+  border-radius: 0;
+}
+
+.ant-progress-bg {
+  border-radius: 0;
+}
+
+.ant-progress {
+  display: block;
+}
+
+.ant-progress-line {
+  font-size: 0;
+}
+
+.ant-progress-outer {
+  position: absolute;
+  top: -6px;
+}
+
+.ant-progress-inner {
+  background-color: transparent;
+}
+
+.ant-progress-small.ant-progress-line, .ant-progress-small.ant-progress-line .ant-progress-text .anticon {
+  font-size: 0;
+}

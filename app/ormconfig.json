@@ -1,0 +1,11 @@
+[
+  {
+    "name": "default",
+    "type": "sqlite",
+    "database": "./example.sq3",
+    "autoSchemaSync": true,
+    "entities": [
+      "./entity/*.ts"
+    ]
+  }
+]
