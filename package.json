@@ -1,7 +1,7 @@
 {
   "name": "shenmue-launcher",
   "productName": "Shenmue Launcher",
-  "version": "1.0.0",
+  "version": "0.13.0",
   "description": "Shenmue Launcher: обновляет переводы игр серии Shenmue",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
@@ -97,8 +97,8 @@
     },
     "publish": {
       "provider": "github",
-      "owner": "electron-react-boilerplate",
-      "repo": "electron-react-boilerplate",
+      "owner": "Hazuki124",
+      "repo": "rus-shenmue-launcher",
       "private": false
     }
   },
