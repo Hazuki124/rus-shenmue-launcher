@@ -1,4 +1,4 @@
-import { remote, shell } from 'electron';
+import {ipcRenderer, remote, shell} from 'electron';
 import React, { Component } from 'react';
 import { Layout, Button, Badge, Tooltip } from 'antd';
 import classNames from 'classnames';
@@ -75,6 +75,10 @@ export default class Sidebar extends Component<Props, State> {
     }
   }
 
+  forceInstallUpdate() {
+    ipcRenderer.send('force-install');
+  }
+
   render() {
     const { Header, Footer, Sider, Content } = Layout;
     const { show } = this.state;
@@ -82,13 +86,6 @@ export default class Sidebar extends Component<Props, State> {
     const appVersion = remote.app.getVersion();
 
     const isNewVersionAvailable = updateIsAvailable ? 1 : 0;
-
-    // const isNewVersionAvailable =
-    //   launcherUpdateInfo &&
-    //   launcherUpdateInfo.version &&
-    //   appVersion !== launcherUpdateInfo.version
-    //     ? 1
-    //     : 0;
 
     return (
       <Sider width={300} className={styles.container}>
@@ -207,7 +204,7 @@ export default class Sidebar extends Component<Props, State> {
             )}
             {updateIsDownloaded && (
               <div>
-                <Button type="link" className={styles.loadingBtn}>
+                <Button type="link" onClick={this.forceInstallUpdate}>
                   <ExclamationCircleOutlined /> Обновление готово к установке
                 </Button>
               </div>

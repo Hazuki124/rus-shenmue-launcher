@@ -35,6 +35,10 @@ export default class AppUpdater {
       mainWindow.webContents.send('update-not-available');
     });
 
+    ipcMain.on('force-install', () => {
+      autoUpdater.quitAndInstall(true, true);
+    })
+
     autoUpdater.checkForUpdates();
   }
 }
