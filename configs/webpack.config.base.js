@@ -41,7 +41,7 @@ export default {
   plugins: [
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
-      INI_DOWNLOAD_URL: ''
+      INI_DOWNLOAD_URL: 'https://raw.githubusercontent.com/Hazuki124/rus-shenmue-launcher/master/versions.ini'
     }),
 
     new webpack.NamedModulesPlugin()
