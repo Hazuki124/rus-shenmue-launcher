@@ -1,7 +1,7 @@
 {
   "name": "shenmue-launcher",
   "productName": "Shenmue Launcher",
-  "version": "0.13.0",
+  "version": "0.14.0",
   "description": "Shenmue Launcher: обновляет переводы игр серии Shenmue",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
