@@ -1,13 +1,13 @@
 {
-  "name": "electron-react-boilerplate",
-  "productName": "electron-react-boilerplate",
-  "version": "0.14.0",
-  "description": "Electron application boilerplate based on React, React Router, Webpack, React Hot Loader for rapid application development",
+  "name": "shenmue-launcher",
+  "productName": "Shenmue Launcher",
+  "version": "0.15.0",
+  "description": "Shenmue Launcher: обновляет переводы игр серии Shenmue",
   "main": "./main.prod.js",
   "author": {
-    "name": "Electron React Boilerplate Maintainers",
-    "email": "electronreactboilerplate@gmail.com",
-    "url": "https://github.com/electron-react-boilerplate"
+    "name": "Hazuki124",
+    "email": "hazuki124@gmail.com",
+    "url": "https://github.com/Hazuki124/rus-shenmue-launcher"
   },
   "scripts": {
     "electron-rebuild": "node -r ../internals/scripts/BabelRegister.js ../internals/scripts/ElectronRebuild.js",

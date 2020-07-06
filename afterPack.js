@@ -3,6 +3,7 @@ exports.default = async function(context) {
   const fs = require('fs');
   const localeDir = `${context.appOutDir}/locales/`;
 
+  // remove locales
   fs.readdir(localeDir, function(err, files) {
     // files is array of filenames (basename form)
     if (!(files && files.length)) return;

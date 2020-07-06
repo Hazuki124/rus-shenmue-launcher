@@ -1,7 +1,7 @@
 {
   "name": "shenmue-launcher",
   "productName": "Shenmue Launcher",
-  "version": "0.14.0",
+  "version": "0.15.0",
   "description": "Shenmue Launcher: обновляет переводы игр серии Shenmue",
   "scripts": {
     "build": "concurrently \"yarn build-main\" \"yarn build-renderer\"",
@@ -62,7 +62,7 @@
       "package.json",
       "assets/"
     ],
-    "afterPack": "./removeLocales.js",
+    "afterPack": "./afterPack.js",
     "dmg": {
       "contents": [
         {
@@ -82,6 +82,12 @@
         "nsis",
         "msi"
       ]
+    },
+    "nsis": {
+      "allowElevation": false,
+      "allowToChangeInstallationDirectory": true,
+      "oneClick": false,
+      "perMachine": true
     },
     "linux": {
       "target": [
