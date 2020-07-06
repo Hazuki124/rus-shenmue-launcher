@@ -16,10 +16,26 @@ import log from 'electron-log';
 import MenuBuilder from './menu';
 
 export default class AppUpdater {
-  constructor() {
+  constructor(mainWindow: BrowserWindow) {
     log.transports.file.level = 'info';
     autoUpdater.logger = log;
-    autoUpdater.checkForUpdatesAndNotify();
+    autoUpdater.on('update-available', () => {
+      mainWindow.webContents.send('update-available');
+    });
+    autoUpdater.on('error', (err) => {
+      mainWindow.webContents.send('update-error', err);
+    });
+    autoUpdater.on('update-downloaded', (_event, releaseNotes, _releaseName) => {
+      mainWindow.webContents.send('update-downloaded');
+    });
+    autoUpdater.on('checking-for-update', () => {
+      mainWindow.webContents.send('checking-for-update');
+    });
+    autoUpdater.on('update-not-available', () => {
+      mainWindow.webContents.send('update-not-available');
+    });
+
+    autoUpdater.checkForUpdates();
   }
 }
 
@@ -126,7 +142,7 @@ const createWindow = async () => {
 
   // Remove this if your app does not use auto updates
   // eslint-disable-next-line
-  new AppUpdater();
+  new AppUpdater(mainWindow);
 };
 
 /**

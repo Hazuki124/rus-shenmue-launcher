@@ -63,6 +63,7 @@
       "assets/"
     ],
     "afterPack": "./afterPack.js",
+    "afterAllArtifactBuild": "./afterAllArtifactBuild.js",
     "dmg": {
       "contents": [
         {
@@ -79,15 +80,16 @@
     },
     "win": {
       "target": [
-        "nsis",
-        "msi"
+        "nsis"
       ]
     },
     "nsis": {
       "allowElevation": false,
       "allowToChangeInstallationDirectory": true,
       "oneClick": false,
-      "perMachine": true
+      "perMachine": true,
+      "installerSidebar": "./resources/installerSidebar.bmp",
+      "uninstallerSidebar": "./resources/uninstallerSidebar.bmp"
     },
     "linux": {
       "target": [

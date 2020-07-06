@@ -8,7 +8,7 @@ import Artifact from '../entity/Artifact';
 
 const options: ConnectionOptions = {
   type: 'sqlite',
-  database: `${path.dirname(remote.app.getPath('exe'))}\\gamelist`,
+  database: `${path.dirname(remote.app.getPath('appData'))}\\gamelist`,
   entities: [Game, Artifact],
   migrations: [Game1593245054458, Artifact1593245054459],
   migrationsRun: true,

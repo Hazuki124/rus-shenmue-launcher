@@ -58,6 +58,7 @@
 
 .footer {
   position: absolute;
+  padding: 24px 0 !important;
   bottom: 0;
   width: 100%;
   text-align: center;
@@ -75,4 +76,9 @@
 
 .launcherDownloadLink:hover {
   color: rgba(255,255,255,1) !important;
+}
+
+.loadingBtn {
+  color: rgba(255,255,255,.65) !important;
+  cursor: default !important;
 }

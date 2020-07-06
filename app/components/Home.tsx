@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Row, Col, Layout } from 'antd';
-import { ipcRenderer } from 'electron';
+import { Row, Col, Layout, message } from 'antd';
+import { ipcRenderer, remote } from 'electron';
 import { get } from 'lodash';
 import styles from './Home.css';
 import Sidebar from './Sidebar';
@@ -11,6 +11,7 @@ import GameCard, {
   GameType
 } from './GameCard';
 import Header from './Header';
+import Notificator from '../utils/Notificator';
 
 type Props = {
   items: GameType[];
@@ -38,7 +39,10 @@ type Props = {
 };
 
 type State = {
-  intervalId: ReturnType<typeof setTimeout>;
+  updateIsAvailable: boolean;
+  updateIsDownloaded: boolean;
+  updateDownloadInProgress: boolean;
+  intervalId?: ReturnType<typeof setTimeout>;
 };
 
 export default class Home extends Component<Props, State> {
@@ -50,6 +54,12 @@ export default class Home extends Component<Props, State> {
       downloadTranslationUpdateFailed,
       downloadTranslationUpdateProgress
     } = props;
+
+    this.state = {
+      updateIsAvailable: false,
+      updateIsDownloaded: false,
+      updateDownloadInProgress: false,
+    };
 
     ipcRenderer.on('download complete', (_event, info) => {
       downloadTranslationUpdateSuccess(
@@ -69,6 +79,55 @@ export default class Home extends Component<Props, State> {
         downloadTranslationUpdateProgress(game, availableVersion, progress);
       }
     );
+
+    ipcRenderer.on(
+      'download progress',
+      (_event, progress, game, availableVersion) => {
+        downloadTranslationUpdateProgress(game, availableVersion, progress);
+      }
+    );
+
+    ipcRenderer.on(
+      'update-available',
+      () => {
+        this.setState({
+          updateIsAvailable: true,
+          updateDownloadInProgress: true,
+        })
+      }
+    );
+
+    ipcRenderer.on(
+      'update-downloaded',
+      () => {
+        this.setState({
+          updateIsDownloaded: true
+        })
+        Notificator.notify(
+          'Обновление доступно для установки',
+          `${remote.app.name} будет автоматически обновлен при закрытии`
+        );
+      }
+    );
+
+    ipcRenderer.on(
+      'update-error',
+      (err) => {
+        message.warn('Ошибка при загрузке обновления');
+        console.log(err);
+        this.setState({
+          updateIsDownloaded: false,
+          updateDownloadInProgress: false,
+        })
+      }
+    );
+
+    ipcRenderer.on(
+      'update-error',
+      (err) => {
+        console.log(err)
+      }
+    );
   }
 
   componentDidMount() {
@@ -80,7 +139,9 @@ export default class Home extends Component<Props, State> {
     const intervalId = setInterval(() => {
       fetchIniFile(process.env.INI_DOWNLOAD_URL);
     }, 3600000);
-    this.setState({ intervalId });
+    this.setState({
+      intervalId,
+    });
   }
 
   componentWillUnmount() {
@@ -96,6 +157,7 @@ export default class Home extends Component<Props, State> {
       items,
       availableVersions
     } = this.props;
+    const { updateIsAvailable, updateDownloadInProgress, updateIsDownloaded } = this.state;
     const { Content } = Layout;
 
     const games = [];
@@ -119,7 +181,12 @@ export default class Home extends Component<Props, State> {
     // const style = { background: '#0092ff', padding: '8px 0' };
     return (
       <Layout style={{ display: 'flex' }} className={styles.homePage}>
-        <Sidebar launcherUpdateInfo={launcherUpdateInfo} />
+        <Sidebar
+          launcherUpdateInfo={launcherUpdateInfo}
+          updateIsAvailable={updateIsAvailable}
+          updateDownloadInProgress={updateDownloadInProgress}
+          updateIsDownloaded={updateIsDownloaded}
+        />
         <Content className={styles.content}>
           <Menu />
           <Header />

@@ -2,11 +2,15 @@ import { remote, shell } from 'electron';
 import React, { Component } from 'react';
 import { Layout, Button, Badge, Tooltip } from 'antd';
 import classNames from 'classnames';
-import { TeamOutlined } from '@ant-design/icons';
+import { TeamOutlined, ExclamationCircleOutlined } from '@ant-design/icons';
 import styles from './styles.css';
 import FileDownloader from '../../utils/FileDownloader';
+import { LoadingOutlined } from '@ant-design/icons';
 
 type Props = {
+  updateIsAvailable: boolean;
+  updateDownloadInProgress: boolean;
+  updateIsDownloaded: boolean;
   launcherUpdateInfo: {
     url?: string;
     version?: string;
@@ -74,15 +78,17 @@ export default class Sidebar extends Component<Props, State> {
   render() {
     const { Header, Footer, Sider, Content } = Layout;
     const { show } = this.state;
-    const { launcherUpdateInfo } = this.props;
+    const { updateIsAvailable, updateDownloadInProgress, updateIsDownloaded } = this.props;
     const appVersion = remote.app.getVersion();
 
-    const isNewVersionAvailable =
-      launcherUpdateInfo &&
-      launcherUpdateInfo.version &&
-      appVersion !== launcherUpdateInfo.version
-        ? 1
-        : 0;
+    const isNewVersionAvailable = updateIsAvailable ? 1 : 0;
+
+    // const isNewVersionAvailable =
+    //   launcherUpdateInfo &&
+    //   launcherUpdateInfo.version &&
+    //   appVersion !== launcherUpdateInfo.version
+    //     ? 1
+    //     : 0;
 
     return (
       <Sider width={300} className={styles.container}>
@@ -178,13 +184,35 @@ export default class Sidebar extends Component<Props, State> {
               [styles.canSelect]: true
             })}
           >
-            <Tooltip placement="top" title="Доступно обновление">
-              <Badge count={isNewVersionAvailable} color={isNewVersionAvailable ? 'cyan' : ''}>
-                <div>
-                  Версия: {appVersion}
-                </div>
-              </Badge>
-            </Tooltip>
+            {updateIsAvailable &&
+              <Tooltip placement="top" title="Доступно обновление">
+                <Badge count={isNewVersionAvailable} color={isNewVersionAvailable ? 'cyan' : ''}>
+                  <div>
+                    Версия: {appVersion}
+                  </div>
+                </Badge>
+              </Tooltip>
+            }
+            {!isNewVersionAvailable && (
+              <div>
+                Версия: {appVersion}
+              </div>
+            )}
+            {!updateIsDownloaded && updateDownloadInProgress && (
+              <div>
+                <Button type="link" className={styles.loadingBtn}>
+                  <LoadingOutlined /> Загрузка обновления...
+                </Button>
+              </div>
+            )}
+            {updateIsDownloaded && (
+              <div>
+                <Button type="link" className={styles.loadingBtn}>
+                  <ExclamationCircleOutlined /> Обновление готово к установке
+                </Button>
+              </div>
+            )}
+            {/*
             <Button
               className={classNames({
                 [styles.launcherDownloadLink]: true,
@@ -195,6 +223,7 @@ export default class Sidebar extends Component<Props, State> {
             >
               Ручное обновление лаунчера
             </Button>
+            */}
           </Footer>
         </Layout>
       </Sider>
