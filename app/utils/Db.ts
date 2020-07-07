@@ -6,9 +6,14 @@ import { Game1593245054458 } from '../migration/1593245054458-Game';
 import { Artifact1593245054459 } from '../migration/1593245054459-Artifact';
 import Artifact from '../entity/Artifact';
 
+const dbDirectory =
+  process.env.NODE_ENV === 'production'
+    ? path.dirname(remote.app.getPath('appData'))
+    : path.dirname(remote.app.getPath('exe'));
+
 const options: ConnectionOptions = {
   type: 'sqlite',
-  database: `${path.dirname(remote.app.getPath('appData'))}\\gamelist`,
+  database: `${dbDirectory}\\gamelist`,
   entities: [Game, Artifact],
   migrations: [Game1593245054458, Artifact1593245054459],
   migrationsRun: true,
