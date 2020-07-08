@@ -43,7 +43,7 @@ export default {
       NODE_ENV: 'production',
       INI_DOWNLOAD_URL:
         'https://raw.githubusercontent.com/Hazuki124/rus-shenmue-launcher/master/versions.ini',
-      DB_NAME: 'gamelist'
+      DB_NAME: 'gamelist.bin'
     }),
 
     new webpack.NamedModulesPlugin()

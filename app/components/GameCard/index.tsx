@@ -40,6 +40,7 @@ export type AvailableVersionType = {
   url: string;
   version: string | null;
   reportTranslationIssue?: string | null;
+  checkFile?: string | null;
   isDownloading?: boolean;
   isUnpacking?: boolean;
   isInstalling?: boolean;
@@ -72,7 +73,6 @@ export default class GameCard extends Component<Props, State> {
   constructor(props: Props) {
     super(props);
 
-    this.handleButtonClick = this.handleButtonClick.bind(this);
     this.selectDirectory = this.selectDirectory.bind(this);
     this.resetDirectory = this.resetDirectory.bind(this);
     this.uninstall = this.uninstall.bind(this);
@@ -83,11 +83,6 @@ export default class GameCard extends Component<Props, State> {
     this.resetCurrentVersion = this.resetCurrentVersion.bind(this);
     this.openExternalLink = this.openExternalLink.bind(this);
     this.reportIssue = this.reportIssue.bind(this);
-  }
-
-  handleButtonClick(e) {
-    message.info('Click on left button.');
-    console.log('click left button', e);
   }
 
   async runGame() {
@@ -132,7 +127,18 @@ export default class GameCard extends Component<Props, State> {
 
   downloadAndUpdateTranslation() {
     const { game, availableVersion, onDownloadUpdate } = this.props;
-    onDownloadUpdate(availableVersion, game);
+    if (isEmpty(availableVersion?.checkFile)) {
+      onDownloadUpdate(availableVersion, game);
+    } else if (
+      fs.existsSync(`${game.directory}/${availableVersion?.checkFile}`)
+    ) {
+      onDownloadUpdate(availableVersion, game);
+    } else {
+      message.warning(
+        'Выбранная версия не поддерживается. Обновите игру до версии 1.07',
+        10
+      );
+    }
   }
 
   resetDirectory() {

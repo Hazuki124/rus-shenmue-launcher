@@ -183,11 +183,16 @@ app.on('ready', async () => {
   console.log(app.getPath('exe'));
   console.log(process.env.INI_DOWNLOAD_URL);
 
-  const appDataDb = `${path.dirname(app.getPath('appData'))}\\${process.env.DB_NAME}`;
-  const userDataDb = `${app.getPath('userData')}\\${process.env.DB_NAME}`;
+  // try to move database from previous version
+  try {
+    const appDataDb = `${path.dirname(app.getPath('appData'))}\\gamelist`;
+    const userDataDb = `${app.getPath('userData')}\\${process.env.DB_NAME}`;
 
-  if (fs.existsSync(appDataDb) && !fs.existsSync(userDataDb)) {
-    fs.copyFileSync(appDataDb, userDataDb);
+    if (fs.existsSync(appDataDb) && !fs.existsSync(userDataDb)) {
+      fs.copyFileSync(appDataDb, userDataDb);
+    }
+  } catch (e) {
+    console.log(e);
   }
 });
 
