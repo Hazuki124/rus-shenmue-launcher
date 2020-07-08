@@ -8,12 +8,12 @@ import Artifact from '../entity/Artifact';
 
 const dbDirectory =
   process.env.NODE_ENV === 'production'
-    ? path.dirname(remote.app.getPath('appData'))
+    ? remote.app.getPath('userData')
     : path.dirname(remote.app.getPath('exe'));
 
 const options: ConnectionOptions = {
   type: 'sqlite',
-  database: `${dbDirectory}\\gamelist`,
+  database: `${dbDirectory}\\${process.env.DB_NAME}`,
   entities: [Game, Artifact],
   migrations: [Game1593245054458, Artifact1593245054459],
   migrationsRun: true,

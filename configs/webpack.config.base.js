@@ -42,7 +42,8 @@ export default {
     new webpack.EnvironmentPlugin({
       NODE_ENV: 'production',
       INI_DOWNLOAD_URL:
-        'https://raw.githubusercontent.com/Hazuki124/rus-shenmue-launcher/master/versions.ini'
+        'https://raw.githubusercontent.com/Hazuki124/rus-shenmue-launcher/master/versions.ini',
+      DB_NAME: 'gamelist'
     }),
 
     new webpack.NamedModulesPlugin()

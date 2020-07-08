@@ -9,6 +9,7 @@
  * `./app/main.prod.js` using webpack. This gives us some performance wins.
  */
 import path from 'path';
+import fs from 'fs';
 import { app, BrowserWindow, ipcMain } from 'electron';
 import { download } from 'electron-dl';
 import { autoUpdater } from 'electron-updater';
@@ -22,12 +23,15 @@ export default class AppUpdater {
     autoUpdater.on('update-available', () => {
       mainWindow.webContents.send('update-available');
     });
-    autoUpdater.on('error', (err) => {
+    autoUpdater.on('error', err => {
       mainWindow.webContents.send('update-error', err);
     });
-    autoUpdater.on('update-downloaded', (_event, releaseNotes, _releaseName) => {
-      mainWindow.webContents.send('update-downloaded');
-    });
+    autoUpdater.on(
+      'update-downloaded',
+      (_event, releaseNotes, _releaseName) => {
+        mainWindow.webContents.send('update-downloaded');
+      }
+    );
     autoUpdater.on('checking-for-update', () => {
       mainWindow.webContents.send('checking-for-update');
     });
@@ -37,7 +41,7 @@ export default class AppUpdater {
 
     ipcMain.on('force-install', () => {
       autoUpdater.quitAndInstall(true, true);
-    })
+    });
 
     autoUpdater.checkForUpdates();
   }
@@ -118,27 +122,34 @@ const createWindow = async () => {
   });
 
   ipcMain.on('download', (_event, info) => {
-    console.log(info.url)
+    console.log(info.url);
     info.properties.onProgress = (status: any) =>
-      mainWindow.webContents.send('download progress', status, info.game, info.availableVersion);
+      mainWindow.webContents.send(
+        'download progress',
+        status,
+        info.game,
+        info.availableVersion
+      );
     download(BrowserWindow.getFocusedWindow(), info.url, {
       ...info.properties,
       saveAs: false,
       errorTitle: 'Ошибка при загрузке обновления',
       errorMessage: 'Файл {filename} не обнаружен',
       openFolderWhenDone: false
-    }).then((dl: { getSavePath: () => any }) => {
-      mainWindow.webContents.send('download complete', {
-        file: dl.getSavePath(),
-        game: info.game,
-        availableVersion: info.availableVersion
+    })
+      .then((dl: { getSavePath: () => any }) => {
+        mainWindow.webContents.send('download complete', {
+          file: dl.getSavePath(),
+          game: info.game,
+          availableVersion: info.availableVersion
+        });
+      })
+      .catch(() => {
+        mainWindow.webContents.send('download interrupted', {
+          game: info.game,
+          availableVersion: info.availableVersion
+        });
       });
-    }).catch(() => {
-      mainWindow.webContents.send('download interrupted', {
-        game: info.game,
-        availableVersion: info.availableVersion
-      });
-    });
   });
 
   const menuBuilder = new MenuBuilder(mainWindow);
@@ -171,6 +182,13 @@ app.on('ready', async () => {
   console.log(app.getPath('temp'));
   console.log(app.getPath('exe'));
   console.log(process.env.INI_DOWNLOAD_URL);
+
+  const appDataDb = `${path.dirname(app.getPath('appData'))}\\${process.env.DB_NAME}`;
+  const userDataDb = `${app.getPath('userData')}\\${process.env.DB_NAME}`;
+
+  if (fs.existsSync(appDataDb) && !fs.existsSync(userDataDb)) {
+    fs.copyFileSync(appDataDb, userDataDb);
+  }
 });
 
 app.on('activate', () => {
