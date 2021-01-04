@@ -62,7 +62,7 @@ export default class Sidebar extends Component<Props, State> {
   }
 
   openPatronsLink() {
-    shell.openExternal('https://vk.com/topic-186925092_40383085');
+    shell.openExternal('https://likeadragon.tilda.ws');
   }
 
   openLauncherLink() {

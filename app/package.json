@@ -1,7 +1,7 @@
 {
   "name": "shenmue-launcher",
   "productName": "Shenmue Launcher",
-  "version": "0.18.0",
+  "version": "0.19.0",
   "description": "Shenmue Launcher: обновляет переводы игр серии Shenmue",
   "main": "./main.prod.js",
   "author": {
